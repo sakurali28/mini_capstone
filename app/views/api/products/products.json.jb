@@ -1,3 +1,15 @@
-{
-  products: @product,
-}
+json = []
+i = 0
+while i < @products.length
+  product = @products[i]
+  info = {
+    name: product.name,
+    price: product.price,
+    image_url: product.image_url,
+    description: product.description,
+  }
+  json << info
+  i += 1
+end
+
+return json
