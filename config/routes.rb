@@ -5,5 +5,7 @@ Rails.application.routes.draw do
     get "/blender_path" => "products#blender"
 
     get "/dutch_oven_path" => "products#dutch_oven"
+
+    get "/electric_kettle_path" => "products#electric_kettle"
   end
 end
