@@ -21,13 +21,7 @@ class Api::ProductsController < ApplicationController
 
   def individual
     input = params["any_product"]
-    if input == "blender"
-      @output = Product.first
-    elsif input == "dutch_oven"
-      @output = Product.find_by(id: 2)
-    elsif input == "electric_kettle"
-      @output = Product.find_by(id: 3)
-    end
+    @output = Product.find_by(id: input)
     render "individual.json.jb"
   end
 end
