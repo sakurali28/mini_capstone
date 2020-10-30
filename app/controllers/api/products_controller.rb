@@ -5,7 +5,7 @@ class Api::ProductsController < ApplicationController
   end
 
   def blender
-    @product = Product.first
+    @product = Product.find_by(id: 1)
     render "blender.json.jb"
   end
 
@@ -17,5 +17,17 @@ class Api::ProductsController < ApplicationController
   def electric_kettle
     @product3 = Product.find_by(id: 3)
     render "electric_kettle.json.jb"
+  end
+
+  def individual
+    input = params["any_product"]
+    if input == "blender"
+      @output = Product.first
+    elsif input == "dutch_oven"
+      @output = Product.find_by(id: 2)
+    elsif input == "electric_kettle"
+      @output = Product.find_by(id: 3)
+    end
+    render "individual.json.jb"
   end
 end

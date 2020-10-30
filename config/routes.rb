@@ -7,5 +7,9 @@ Rails.application.routes.draw do
     get "/dutch_oven_path" => "products#dutch_oven"
 
     get "/electric_kettle_path" => "products#electric_kettle"
+
+    get "/any_product" => "products#individual"
+
+    get "/any_product/:any_product" => "products#individual"
   end
 end
