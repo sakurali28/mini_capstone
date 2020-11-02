@@ -1,6 +1,0 @@
-{
-  name: @output.name,
-  price: @output.price,
-  image_url: @output.image_url,
-  description: @output.description,
-}
