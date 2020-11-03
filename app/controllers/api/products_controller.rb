@@ -12,7 +12,7 @@ class Api::ProductsController < ApplicationController
 
   def create
     @product = Product.new ({
-      id: @product["id"]
+      id: product["id"],
       name: params["name"],
       price: params["price"],
       image_url: params["image_url"],
@@ -25,7 +25,7 @@ class Api::ProductsController < ApplicationController
   def update
     input_id = params["id"]
     @product = Product.find_by(id: input_id)
-    @product.id = params["id"]  || @product.id
+    @product.id = params["id"] || @product.id
     @product.name = params["name"] || @product.name
     @product.price = params["price"] || @product.price
     @product.image_url = params["image_url"] || @product.image_url

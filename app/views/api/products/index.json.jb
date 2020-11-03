@@ -1,16 +1,19 @@
-json = []
-i = 0
-while i < @products.length
-  product = @products[i]
-  info = {
-    id: product.id,
-    name: product.name,
-    price: product.price,
-    image_url: product.image_url,
-    description: product.description,
-  }
-  json << info
-  i += 1
+@products.map do |product|
+  render partial: "product.json.jb", locals: { product: product }
 end
 
-return json
+# json = []
+# i = 0
+# while i < @products.length
+#   product = @products[i]
+#   info = {
+#     id: product.id,
+#     name: product.name,
+#     price: product.price,
+#     image_url: product.image_url,
+#     description: product.description,
+#   }
+#   json << info
+#   i += 1
+# end
+# return json
