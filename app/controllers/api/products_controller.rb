@@ -1,6 +1,21 @@
 class Api::ProductsController < ApplicationController
   def index
     @products = Product.all
+    @products = @products.order(id: :asc)
+
+    if params[:search]
+      @products = @products.where("name LIKE ?", "%#{params[:search]}%")
+    end
+
+    if params[:sort] == "price"
+      @products = @products.order(price: :asc)
+    elsif params[:sort] == "price" && params[:sort_order] == "desc"
+      @products = @products.order(price: :desc)
+    end
+
+    if params[:discount] == "true"
+      @products = @products.where("price < 100")
+    end
     render "index.json.jb"
   end
 
@@ -12,11 +27,11 @@ class Api::ProductsController < ApplicationController
 
   def create
     @product = Product.new ({
-      id: product["id"],
       name: params["name"],
       price: params["price"],
       image_url: params["image_url"],
       description: params["description"],
+      supplier_id: params["supplier_id"],
     })
     if @product.save
       render "show.json.jb"
@@ -28,11 +43,11 @@ class Api::ProductsController < ApplicationController
   def update
     input_id = params["id"]
     @product = Product.find_by(id: input_id)
-    @product.id = params["id"] || @product.id
     @product.name = params["name"] || @product.name
     @product.price = params["price"] || @product.price
     @product.image_url = params["image_url"] || @product.image_url
     @product.description = params["description"] || @product.description
+    @product.supplier_id = params["supplier_id"] || @product.supplier_id
 
     if @product.save
       render "show.json.jb"
