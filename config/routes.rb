@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   namespace :api do
     post "/users" => "users#create"
-
     post "/sessions" => "sessions#create"
 
     get "/products" => "products#index"
@@ -15,5 +14,9 @@ Rails.application.routes.draw do
     post "/suppliers" => "suppliers#create"
     patch "/suppliers/:id" => "suppliers#update"
     delete "/suppliers/:id" => "suppliers#destroy"
+
+    post "/orders" => "orders#create"
+    get "/orders" => "orders#index"
+    get "/orders/:id" => "orders#show"
   end
 end

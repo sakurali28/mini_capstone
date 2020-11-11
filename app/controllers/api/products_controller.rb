@@ -3,19 +3,19 @@ class Api::ProductsController < ApplicationController
     @products = Product.all
     @products = @products.order(id: :asc)
 
-    if params[:search]
-      @products = @products.where("name LIKE ?", "%#{params[:search]}%")
-    end
+    # if params[:search]
+    #   @products = @products.where("name LIKE ?", "%#{params[:search]}%")
+    # end
 
-    if params[:sort] == "price"
-      @products = @products.order(price: :asc)
-    elsif params[:sort] == "price" && params[:sort_order] == "desc"
-      @products = @products.order(price: :desc)
-    end
+    # if params[:sort] == "price"
+    #   @products = @products.order(price: :asc)
+    # elsif params[:sort] == "price" && params[:sort_order] == "desc"
+    #   @products = @products.order(price: :desc)
+    # end
 
-    if params[:discount] == "true"
-      @products = @products.where("price < 100")
-    end
+    # if params[:discount] == "true"
+    #   @products = @products.where("price < 100")
+    # end
     render "index.json.jb"
   end
 
