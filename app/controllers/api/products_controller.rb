@@ -1,8 +1,9 @@
 class Api::ProductsController < ApplicationController
+  before_action :authenticate_admin, except: [:index, :show]
+
   def index
     @products = Product.all
     @products = @products.order(id: :asc)
-
     # if params[:search]
     #   @products = @products.where("name LIKE ?", "%#{params[:search]}%")
     # end
@@ -26,15 +27,15 @@ class Api::ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.new ({
+    @product = Product.new(
       name: params[:name],
       price: params[:price],
       description: params[:description],
       quantity: params[:quantity],
       supplier_id: params[:supplier_id],
-    })
+    )
     if @product.save
-      image = Image.create!({ product_id: @product.id, url: params[:url] })
+      image = Image.create!(product_id: @product.id, url: params[:url])
       render "show.json.jb"
     else
       render json: { error: @product.errors.full_messages }, status: :unprocessable_entity
