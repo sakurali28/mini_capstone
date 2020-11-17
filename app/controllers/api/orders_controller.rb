@@ -2,20 +2,16 @@ class Api::OrdersController < ApplicationController
   before_action :authenticate_user
 
   def create
-    product = Product.find_by(id: params[:product_id])
-    calculated_subtotal = product.price * params[:quantity].to_i
-    calculated_tax = calculated_subtotal * 0.09
-    calculated_total = calculated_subtotal * calculated_tax
+    carted_products = current_user.carted_products.where(status: "carted")
 
     @order = Order.new(
       user_id: current_user.id,
-      product_id: params[:product_id],
-      quantity: params[:quantity],
       subtotal: calculated_subtotal,
       tax: calculated_tax,
       total: calculated_total,
     )
     @order.save
+    carted_products.update_all(status: "purchased", order_id: @order.id)
     render "show.json.jb"
   end
 
@@ -26,6 +22,10 @@ class Api::OrdersController < ApplicationController
 
   def show
     @order = Order.find_by(id: params[:id])
-    render "show.json.jb"
+    if @order.user.id == current__user.id
+      render "show.json.jb"
+    else
+      render json: { message: "NOPE." }
+    end
   end
 end

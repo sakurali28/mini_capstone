@@ -3,7 +3,14 @@ class Api::ProductsController < ApplicationController
 
   def index
     @products = Product.all
-    @products = @products.order(id: :asc)
+    if params[:category]
+      category = Category.find_by(name: params[:category])
+      @products = category.products
+    else
+      render "index.json.jb"
+    end
+
+    # @products = @products.order(id: :asc)
     # if params[:search]
     #   @products = @products.where("name LIKE ?", "%#{params[:search]}%")
     # end
@@ -17,7 +24,6 @@ class Api::ProductsController < ApplicationController
     # if params[:discount] == "true"
     #   @products = @products.where("price < 100")
     # end
-    render "index.json.jb"
   end
 
   def show
